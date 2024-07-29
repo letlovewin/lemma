@@ -6,7 +6,6 @@
     import HomeNotAuthenticated from "./HomeNotAuthenticated.svelte";
     import Navbar from "./Navbar.svelte";
 
-    const isSignedIn = 0;
     import {createClient} from "@supabase/supabase-js"
     
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
