@@ -1,35 +1,34 @@
 <script>
     import { browser } from "$app/environment";
     import { goto } from "$app/navigation";
-import Navbar from "./Navbar.svelte";
+    import Footer from "./Footer.svelte";
+    import HomeNotAuthenticated from "./HomeNotAuthenticated.svelte";
+    import Navbar from "./Navbar.svelte";
+
+    const isSignedIn = 0;
+    import {createClient} from "@supabase/supabase-js"
+    import {PUBLIC_SUPABASE_KEY} from '$env/static/public'
+
+    const supabaseUrl = "https://uqrzveflwowlasogcpfv.supabase.co";
+    const supabaseKey = PUBLIC_SUPABASE_KEY;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
 </script>
 
 <svelte:head>
     <title>lemma</title>
+    <meta
+        name="description"
+        content="A federated alternative to Facebook Marketplace."
+    />
 </svelte:head>
-
 
 <div class="flex flex-col h-screen justify-between">
     <header>
-        <Navbar/>
+        <Navbar />
     </header>
     <main>
-        <div class="grid justify-items-center">
-            <div class="mt-10">
-                <h1
-                    class="scroll-m-20 text-4xl font-extrabold lg:text-5xl"
-                >
-                    A federated alternative to Facebook Marketplace.
-                </h1>
-            </div>
-            <div class="mt-5">
-                    <button class="btn btn-primary" on:click={()=>{if(browser){goto("/signup")}}}>Sign up</button>
-                    <button class="btn btn-neutral">Learn more</button>
-                
-            </div>
-        </div>     
+        <HomeNotAuthenticated />
     </main>
-    <footer class="text-center mb-5">
-        <a href="https://github.com/letlovewin/lemma">Github Repo</a>
-    </footer>
+    <Footer></Footer>
 </div>

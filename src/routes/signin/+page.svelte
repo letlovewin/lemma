@@ -1,6 +1,22 @@
 <script>
   import Footer from "../Footer.svelte";
-import Navbar from "../Navbar.svelte";
+  import Navbar from "../Navbar.svelte";
+
+  import { createClient } from "@supabase/supabase-js";
+  import { PUBLIC_SUPABASE_KEY } from "$env/static/public";
+
+  const supabaseUrl = "https://uqrzveflwowlasogcpfv.supabase.co";
+  const supabaseKey = PUBLIC_SUPABASE_KEY;
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  let user_email, user_password;
+
+  async function signIn() {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: user_email,
+      password: user_password,
+    });
+  }
 </script>
 
 <svelte:head>
@@ -14,11 +30,15 @@ import Navbar from "../Navbar.svelte";
   <main>
     <div class="grid justify-items-center p-5">
       <div class="mt-10 flex flex-col items-center">
-        <img src={"/favicon.png"} alt="Lemma Icon" style="width:128px;height:128px;"/>
+        <img
+          src={"/favicon.png"}
+          alt="Lemma Icon"
+          style="width:128px;height:128px;"
+        />
         <h1
           class="scroll-m-20 text-4xl font-extrabold lg:text-5xl text-center my-5"
         >
-          Sign up
+          Sign in
         </h1>
         <label class="input input-bordered flex items-center gap-2 mb-2">
           <svg
@@ -34,20 +54,12 @@ import Navbar from "../Navbar.svelte";
               d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
             />
           </svg>
-          <input type="text" class="grow" placeholder="Email" />
-        </label>
-        <label class="input input-bordered flex items-center gap-2 mb-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-            class="h-4 w-4 opacity-70"
-          >
-            <path
-              d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
-            />
-          </svg>
-          <input type="text" class="grow" placeholder="Username" />
+          <input
+            type="text"
+            class="grow"
+            placeholder="Email"
+            bind:value={user_email}
+          />
         </label>
         <label class="input input-bordered flex items-center gap-2 mb-2">
           <svg
@@ -62,9 +74,16 @@ import Navbar from "../Navbar.svelte";
               clip-rule="evenodd"
             />
           </svg>
-          <input type="password" class="grow" placeholder="Password" />
+          <input
+            type="password"
+            class="grow"
+            placeholder="Password"
+            bind:value={user_password}
+          />
         </label>
-        <button class="btn btn-primary btn-lg self-center">Sign up</button>
+        <button class="btn btn-primary btn-lg self-center" on:click={signIn}
+          >Sign in</button
+        >
       </div>
     </div>
   </main>
