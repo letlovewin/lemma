@@ -1,10 +1,7 @@
-import { generate, count } from "random-words"; // wasn't going to use a random string of alphanumeric characters for uid, i think it looks ugly
-
 import { redirect, fail } from '@sveltejs/kit'
 import { AuthApiError } from "@supabase/supabase-js";
 
 import type { Actions } from './$types'
-import type { QueryData, QueryError, QueryResult } from "@supabase/supabase-js";
 
 export const actions: Actions = {
   signup: async ({ request, locals: { supabase } }) => {
@@ -13,7 +10,16 @@ export const actions: Actions = {
     const password = formData.get('password') as string
     const username = formData.get('username') as string
 
-    const { error } = await supabase.auth.signUp({ email, password, options: { data: { display_name: username, } } })
+    if(username.length > 20 || username.length <= 1) {
+      return fail(400, {
+        error: "You're being rate limited.",
+        email: email,
+        invalid: true,
+        message: "Username must be less than 20 characters and more than 1 character long."
+      });
+    }
+
+    const { error } = await supabase.auth.signUp({ email, password, options: { data: { display_name: username, bio: "New user...", profile_photo_url: "" } } })
     if (error) {
       // console.error(error.code)
       if (error instanceof AuthApiError) {
@@ -30,13 +36,6 @@ export const actions: Actions = {
       });
 
     } else {
-      const { error } = await supabase
-        .from('users')
-        .insert({ 
-          display_name: username,
-          bio: "",
-          uid: (await supabase.auth.getUser()).data.user?.id, 
-        })
       redirect(303, '/signup/verify')
     }
   },

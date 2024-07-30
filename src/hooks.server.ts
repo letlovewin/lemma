@@ -2,9 +2,12 @@ import { createServerClient } from '@supabase/ssr'
 import { type Database } from './database.types'
 import { type Handle, redirect } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
+import { VITE_SUPABASE_KEY, VITE_SUPABASE_URL } from '$env/static/private'
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_KEY;
+const SUPABASE_KEY = VITE_SUPABASE_KEY;
+const SUPABASE_URL = VITE_SUPABASE_URL;
+
+import { createClient } from '@supabase/supabase-js'
 
 const supabase: Handle = async ({ event, resolve }) => {
   /**

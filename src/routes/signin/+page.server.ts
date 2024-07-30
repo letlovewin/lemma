@@ -11,6 +11,14 @@ export const actions: Actions = {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       if (error instanceof AuthApiError && error.status === 400) {
+        if(error.code === "email_not_confirmed") {
+          return fail(400, {
+            error: 'Invalid credentials',
+            email: email,
+            invalid: true,
+            message: "Email not verified."
+          });
+        }
         return fail(400, {
           error: 'Invalid credentials',
           email: email,
