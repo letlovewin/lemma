@@ -1,0 +1,56 @@
+<script>
+    export let form;
+</script>
+
+<svelte:head>
+    <title>lemma - password reset</title>
+</svelte:head>
+
+<div class="grid justify-items-center p-5">
+    <form
+        class="mt-10 flex flex-col items-center"
+        method="POST"
+        action="?/reset"
+    >
+        <img
+            src={"/favicon.png"}
+            alt="Lemma Icon"
+            style="width:128px;height:128px;"
+        />
+        <h1
+            class="scroll-m-20 text-2xl font-extrabold lg:text-3xl text-center my-5"
+        >
+            Password reset
+        </h1>
+        <label class="input input-bordered flex items-center gap-2 mb-2">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                class="h-4 w-4 opacity-70"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
+                    clip-rule="evenodd"
+                />
+            </svg>
+            <input
+                type="password"
+                name="password"
+                class="grow"
+                placeholder="Password"
+            />
+        </label>
+        <button class="btn btn-primary self-center mt-5" type="submit"
+            >Reset password</button
+        >
+        <!--
+        {#key form?.message}
+            {#if form?.message != undefined}
+                <p class="error mt-5">{form?.message}</p>
+            {/if}
+        {/key}
+        -->
+    </form>
+</div>

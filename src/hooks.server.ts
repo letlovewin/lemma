@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
+import { type Database } from './database.types'
 import { type Handle, redirect } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
 
@@ -68,13 +69,14 @@ const authGuard: Handle = async ({ event, resolve }) => {
   event.locals.session = session
   event.locals.user = user
 
-  if (!event.locals.session && event.url.pathname.startsWith('/dashboard')) {
+  if (!event.locals.session && event.url.pathname.startsWith('/account')) {
     redirect(303, '/signin')
   }
 
-  if (event.locals.session && (event.url.pathname === '/signin' || event.url.pathname === '/signup')) {
-    redirect(303, '/dashboard')
+  if (event.locals.session && (event.url.pathname.startsWith('/signin') || event.url.pathname.startsWith('/signup'))) {
+    redirect(303, '/feed')
   }
+
 
   return resolve(event)
 }

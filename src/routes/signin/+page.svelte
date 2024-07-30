@@ -1,4 +1,7 @@
 <script>
+  import { enhance } from "$app/forms";
+
+  export let form;
   let user_email = '';
   let user_password = '';
 
@@ -8,18 +11,18 @@
 </script>
 
 <svelte:head>
-  <title>lemma - sign up</title>
+  <title>lemma - sign in</title>
 </svelte:head>
 
-<div class="grid justify-items-center p-5">
-  <div class="mt-10 flex flex-col items-center">
+<div class="column mx-auto p-5">
+  <form class="mt-10 flex flex-col items-center" method="POST" action="?/signin">
     <img
       src={"/favicon.png"}
       alt="Lemma Icon"
       style="width:128px;height:128px;"
     />
     <h1
-      class="scroll-m-20 text-4xl font-extrabold lg:text-5xl text-center my-5"
+      class="scroll-m-20 text-4xl font-extrabold lg:text-3xl text-center my-5"
     >
       Sign in
     </h1>
@@ -38,10 +41,10 @@
         />
       </svg>
       <input
-        type="text"
+        type="email"
+        name="email"
         class="grow"
         placeholder="Email"
-        bind:value={user_email}
       />
     </label>
     <label class="input input-bordered flex items-center gap-2 mb-2">
@@ -59,13 +62,23 @@
       </svg>
       <input
         type="password"
+        name="password"
         class="grow"
         placeholder="Password"
-        bind:value={user_password}
       />
     </label>
-    <button class="btn btn-primary btn-lg self-center" on:click={signIn}
+    <button type="submit" class="btn btn-primary self-center mt-5" on:click={signIn}
       >Sign in</button
     >
-  </div>
+    <br />
+    {#key form?.message}
+      {#if form?.message != undefined}
+        <p class="text-secondary mt-5">{form?.message}</p>
+      {/if}
+    {/key}
+    <a class="mt-5 link-sexy" href="/recover-password">Forgot your password?</a>
+  </form>
 </div>
+
+
+

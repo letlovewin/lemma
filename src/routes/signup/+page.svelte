@@ -1,12 +1,24 @@
+<script>
+  export let form;
+</script>
+
 <svelte:head>
   <title>lemma - sign up</title>
 </svelte:head>
 
 <div class="grid justify-items-center p-5">
-  <div class="mt-10 flex flex-col items-center">
-    <img src={"/favicon.png"} alt="Lemma Icon" style="width:128px;height:128px;"/>
+  <form
+    class="mt-10 flex flex-col items-center"
+    method="POST"
+    action="?/signup"
+  >
+    <img
+      src={"/favicon.png"}
+      alt="Lemma Icon"
+      style="width:128px;height:128px;"
+    />
     <h1
-      class="scroll-m-20 text-4xl font-extrabold lg:text-5xl text-center my-5"
+      class="scroll-m-20 text-4xl font-extrabold lg:text-3xl text-center my-5"
     >
       Sign up
     </h1>
@@ -24,7 +36,7 @@
           d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
         />
       </svg>
-      <input type="text" class="grow" placeholder="Email" />
+      <input type="email" name="email" class="grow" placeholder="Email" />
     </label>
     <label class="input input-bordered flex items-center gap-2 mb-2">
       <svg
@@ -37,7 +49,7 @@
           d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
         />
       </svg>
-      <input type="text" class="grow" placeholder="Username" />
+      <input type="text" name="username" class="grow" placeholder="Username" />
     </label>
     <label class="input input-bordered flex items-center gap-2 mb-2">
       <svg
@@ -52,8 +64,20 @@
           clip-rule="evenodd"
         />
       </svg>
-      <input type="password" class="grow" placeholder="Password" />
+      <input
+        type="password"
+        name="password"
+        class="grow"
+        placeholder="Password"
+      />
     </label>
-    <button class="btn btn-primary btn-lg self-center">Sign up</button>
-  </div>
+    <button class="btn btn-primary self-center mt-5" type="submit"
+      >Sign up</button
+    >
+    {#key form?.message}
+      {#if form?.message != undefined}
+        <p class="text-secondary mt-5">{form?.message}</p>
+      {/if}
+    {/key}
+  </form>
 </div>
