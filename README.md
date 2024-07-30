@@ -54,3 +54,13 @@ Now that that's finished, run
 vercel link
 ```
 and follow the instructions to link `lemma/` to your project on Vercel.
+
+After you've finished that, run
+
+```bash
+vercel deploy
+```
+
+to deploy your instance. 
+
+**NOTE**: This is NOT complete. I am writing this tutorial alongside whatever development I'm doing. At this point, this is what you have to do if you want to host a clone of this website, sans the ability to post, interact with other users, or even be connected to the Fediverse. Once I implement those features in this repo, I'll add more instructions for that.

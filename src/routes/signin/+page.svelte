@@ -77,6 +77,7 @@
       {/if}
     {/key}
     <a class="mt-5 link-sexy" href="/recover-password">Forgot your password?</a>
+    <a class="mt-5 link-sexy" href="/signup">Sign up</a>
   </form>
 </div>
 

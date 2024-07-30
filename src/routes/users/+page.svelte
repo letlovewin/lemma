@@ -1,4 +1,6 @@
 <script>
+    import { goto } from '$app/navigation';
+
     export let data;
     console.log(data.userInformation);
 </script>
@@ -16,21 +18,23 @@
         {#each data.userInformation as user}
             <div>
                 <div class="flex">
-                    {#if user.profile_photo_url != ""}
+                    {#if user.profile_photo_url === ""}
+                        <div class="avatar placeholder">
+                            <div
+                                class="bg-neutral text-neutral-content w-24 rounded-full"
+                            >
+                                <span class="text-3xl"
+                                    ><a href="/users/{user.id}">{user.display_name[0]}</a></span
+                                >
+                            </div>
+                        </div>
+                    {:else}
                         <div class="avatar">
                             <div class="w-24 rounded-xl">
                                 <img
                                     src={user.profile_photo_url}
                                     alt={user.display_name + "'s profile photo"}
                                 />
-                            </div>
-                        </div>
-                    {:else}
-                        <div class="avatar-placeholder">
-                            <div class="w-24 rounded-xl">
-                                <span class="text-3xl"
-                                    >{user.display_name[0]}</span
-                                >
                             </div>
                         </div>
                     {/if}

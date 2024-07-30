@@ -10,15 +10,36 @@ export const actions: Actions = {
     const password = formData.get('password') as string
     const username = formData.get('username') as string
 
-    if(username.length > 20 || username.length <= 1) {
+    if (username.length > 20 || username.length <= 1) {
       return fail(400, {
-        error: "You're being rate limited.",
         email: email,
         invalid: true,
-        message: "Username must be less than 20 characters and more than 1 character long."
+        message: "Username must be less than 20 characters and more than 1 character long"
       });
     }
 
+    const { data: usernameData, error: usernameError } = await supabase
+      .from('profiles')
+      .select()
+      .eq('display_name', username)
+      .maybeSingle()
+    
+    if(usernameError) {
+      console.log(usernameError)
+      return fail(500, {
+        email: email,
+        invalid: true,
+        message: "Server error. Try again later"
+      });
+    }
+    console.log(usernameData);
+    if(usernameData != null) {
+      return fail(400, {
+        email: email,
+        invalid: true,
+        message: "Username already exists"
+      });
+    }
     const { error } = await supabase.auth.signUp({ email, password, options: { data: { display_name: username, bio: "New user...", profile_photo_url: "" } } })
     if (error) {
       // console.error(error.code)
