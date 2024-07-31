@@ -9,6 +9,8 @@
     let email = "";
     let redirect_link = "/";
     let home_redirect_link = "/";
+    let photo = data.user.user_metadata.profile_photo_url;
+    let display_name = data.user.user_metadata.display_name;
 
     if (data.user != null) {
         email = data.user.email![0];
@@ -53,6 +55,7 @@
                         <a href="/post" class="btn btn-ghost text-lg me-2"> post </a>
                     </ul>
                     <a href={redirect_link} class="me-2">
+                        {#if photo === ""}
                         <div class="avatar placeholder">
                             <div
                                 class="bg-neutral text-neutral-content w-12 rounded-full"
@@ -60,6 +63,16 @@
                                 <span>{email}</span>
                             </div>
                         </div>
+                        {:else}
+                        <div class="avatar">
+                            <div class="w-12 rounded-full">
+                                <img
+                                    src={photo}
+                                    alt="{display_name}'s profile photo"
+                                />
+                            </div>
+                        </div>
+                        {/if}
                     </a>
                     <details class="dropdown dropdown-end">
                         <summary class="btn btn-ghost m-1"
