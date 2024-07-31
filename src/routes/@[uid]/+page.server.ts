@@ -30,8 +30,6 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
         redirect(303, '/feed');
     }
 
-    console.log(data.user.user_metadata);
-
     return {
         userInformation: {
             display_name: data.user.user_metadata.display_name,

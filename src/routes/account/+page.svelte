@@ -16,14 +16,17 @@
     <h1 class="text-center text-4xl font-extrabold lg:text-2xl">Account</h1>
 
     <form method="POST" action="?/save">
-        <div class="grid justify-center mt-5 gap-2">
-            <input
+        <div class="grid justify-center mt-2 gap-2">
+            <div class="tooltip" data-tip="Display names are immutable">
+                <input
                 type="text"
                 name="displayname"
                 placeholder="@{display_name}"
                 class="input input-bordered w-full max-w-xs"
                 disabled
             />
+            </div>
+            
 
             <textarea
                 class="textarea textarea-bordered"

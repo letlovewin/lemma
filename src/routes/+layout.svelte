@@ -12,7 +12,7 @@
 
     if (data.user != null) {
         email = data.user.email![0];
-        redirect_link = "/users/" + data.user.user_metadata.display_name;
+        redirect_link = "/@" + data.user.user_metadata.display_name;
         home_redirect_link = "/feed";
     }
 
@@ -36,7 +36,6 @@
     <header>
         <div class="navbar bg-base-100">
             <div class="flex-1">
-                
                 <a href={home_redirect_link} class="btn btn-ghost text-xl">
                     lemma
                 </a>
@@ -51,7 +50,7 @@
                     >
                 {:else if data.user != undefined}
                     <ul>
-                        <a href="/post" class="btn btn-ghost text-xl"> post </a>
+                        <a href="/post" class="btn btn-ghost text-lg me-2"> post </a>
                     </ul>
                     <a href={redirect_link} class="me-2">
                         <div class="avatar placeholder">
@@ -62,13 +61,9 @@
                             </div>
                         </div>
                     </a>
-                    <div class="dropdown dropdown-end">
-                        <div
-                            tabindex="0"
-                            role="button"
-                            class="btn btn-ghost rounded-btn"
-                        >
-                            <svg
+                    <details class="dropdown dropdown-end">
+                        <summary class="btn btn-ghost m-1"
+                            ><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
@@ -80,10 +75,10 @@
                                     stroke-width="2"
                                     d="M4 6h16M4 12h16M4 18h16"
                                 ></path>
-                            </svg>
-                        </div>
+                            </svg></summary
+                        >
                         <ul
-                            class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-52 p-2 shadow"
+                            class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                         >
                             <li>
                                 <a href="/account">Settings</a>
@@ -96,7 +91,7 @@
                                 >
                             </li>
                         </ul>
-                    </div>
+                    </details>
                 {/if}
             </div>
         </div>
