@@ -8,11 +8,12 @@
     $: ({ session, supabase } = data);
     let email = "";
     let redirect_link = "/";
+    let home_redirect_link = "/";
 
     if (data.user != null) {
         email = data.user.email![0];
         redirect_link = "/users/" + data.user.user_metadata.display_name;
-        
+        home_redirect_link = "/feed";
     }
 
     onMount(() => {
@@ -27,6 +28,7 @@
 
     async function signOut() {
         const { error } = await supabase.auth.signOut();
+        goto("/");
     }
 </script>
 
@@ -34,8 +36,12 @@
     <header>
         <div class="navbar bg-base-100">
             <div class="flex-1">
-                <a href="/" class="btn btn-ghost text-xl"> lemma </a>
+                
+                <a href={home_redirect_link} class="btn btn-ghost text-xl">
+                    lemma
+                </a>
             </div>
+
             <div class="flex-none">
                 {#if data.user === null}
                     <a
@@ -44,13 +50,37 @@
                         href="/signin">Sign in</a
                     >
                 {:else if data.user != undefined}
-                    <div class="dropdown dropdown-end me-2">
+                    <ul>
+                        <a href="/post" class="btn btn-ghost text-xl"> post </a>
+                    </ul>
+                    <a href={redirect_link} class="me-2">
+                        <div class="avatar placeholder">
+                            <div
+                                class="bg-neutral text-neutral-content w-12 rounded-full"
+                            >
+                                <span>{email}</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown dropdown-end">
                         <div
                             tabindex="0"
                             role="button"
                             class="btn btn-ghost rounded-btn"
                         >
-                            More
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                class="inline-block h-5 w-5 stroke-current"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                ></path>
+                            </svg>
                         </div>
                         <ul
                             class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-4 w-52 p-2 shadow"
@@ -66,15 +96,6 @@
                                 >
                             </li>
                         </ul>
-                    </div>
-                    <div class="avatar placeholder">
-                        <div
-                            class="bg-neutral text-neutral-content w-12 rounded-full"
-                        >
-                            <a role="button" href={redirect_link}
-                                ><span>{email}</span></a
-                            >
-                        </div>
                     </div>
                 {/if}
             </div>

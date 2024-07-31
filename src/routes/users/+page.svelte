@@ -1,5 +1,5 @@
 <script>
-    import { goto } from '$app/navigation';
+    import { goto } from "$app/navigation";
 
     export let data;
     console.log(data.userInformation);
@@ -19,15 +19,21 @@
             <div>
                 <div class="flex">
                     {#if user.profile_photo_url === ""}
-                        <div class="avatar placeholder">
-                            <div
-                                class="bg-neutral text-neutral-content w-24 rounded-full"
-                            >
-                                <span class="text-3xl"
-                                    ><a href="/users/{user.id}">{user.display_name[0]}</a></span
+                        <button
+                            on:click={() => {
+                                goto(`/users/{user.id}`);
+                            }}
+                        >
+                            <div class="avatar placeholder">
+                                <div
+                                    class="bg-neutral text-neutral-content w-24 rounded-full"
                                 >
+                                    <span class="text-3xl"
+                                        >{user.display_name[0]}</span
+                                    >
+                                </div>
                             </div>
-                        </div>
+                        </button>
                     {:else}
                         <div class="avatar">
                             <div class="w-24 rounded-xl">

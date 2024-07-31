@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 
 export const load: PageServerLoad = async ({ params, locals: { supabase } }) => {
     const uid = params.uid;
-    console.log("UID: " + uid);
+    // console.log("UID: " + uid);
 
     const { data: usernameData, error: usernameError } = await supabase
         .from('profiles')
@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
         redirect(303, '/feed');
     }
 
-    // console.log(data);
+    console.log(data.user.user_metadata);
 
     return {
         userInformation: {

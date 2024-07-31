@@ -58,8 +58,7 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
 ```
-
-Next, create a .env.local file, and populate it with your `SUPABASE_URL` and `SUPABASE_KEY`:
+Now, back to our `lemma/` directory. Create a .env.local file, and populate it with your `SUPABASE_URL` and `SUPABASE_KEY`:
 
 ```bash
 touch .env.local

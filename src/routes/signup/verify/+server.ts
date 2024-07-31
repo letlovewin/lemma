@@ -26,6 +26,6 @@ export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
     }
   }
 
-  redirectTo.pathname = "/feed%3Fv=true"
+  redirectTo.pathname = "/feed?v=true"
   redirect(303, redirectTo)
 }

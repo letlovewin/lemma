@@ -1,7 +1,4 @@
-import { generate, count } from "random-words"; // wasn't going to use a random string of alphanumeric characters for uid, i think it looks ugly
-
 import { redirect, fail } from '@sveltejs/kit'
-import { AuthApiError } from "@supabase/supabase-js";
 
 import type { Actions } from './$types'
 
