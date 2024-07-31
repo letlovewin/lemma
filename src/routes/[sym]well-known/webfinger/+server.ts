@@ -33,7 +33,7 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
                     {
                         rel: "self", // this should point to the api endpoint for the actor object
                         type: "application/activity+json",
-                        href: `https://${url.hostname}/actor/${uid}`
+                        href: `https://${url.hostname}/@${uid}`
                     },
                     {
                         rel: "http://webfinger.net/rel/profile-page", // this is what a human should look at if they want more info about the person that's been referenced
