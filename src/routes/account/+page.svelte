@@ -2,6 +2,11 @@
     export let data, form;
     let display_name = data.user?.user_metadata.display_name;
     let bio = data.user?.user_metadata.bio;
+    let name = data.user?.user_metadata.name;
+
+    if(name == undefined) {
+        name = 'Name';
+    }
 </script>
 
 <svelte:head>
@@ -26,7 +31,12 @@
                 disabled
             />
             </div>
-            
+            <input
+                type="text"
+                name="name"
+                placeholder="{name}"
+                class="input input-bordered w-full max-w-xs"
+            />
 
             <textarea
                 class="textarea textarea-bordered"

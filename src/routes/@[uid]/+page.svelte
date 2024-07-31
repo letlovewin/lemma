@@ -1,9 +1,10 @@
 <script>
     export let data;
     // console.log(data.userInformation);
-    let profile_photo_url = data.userInformation.profile_photo;
-    let display_name = data.userInformation.display_name;
-    let uuid = data.userInformation.uuid;
+    let profile_photo_url = data.userInformation?.profile_photo;
+    let display_name = data.userInformation?.display_name;
+    let uuid = data.userInformation?.uuid;
+    let name = data.userInformation?.name;
 </script>
 
 <svelte:head>
@@ -35,15 +36,20 @@
                     </div>
                 </div>
             {/if}
-            <h1
-                class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center my-auto ms-5"
-            >
-                {display_name}
-            </h1>
+            <div class="grid content-center ms-5">
+                <h1
+                    class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center my-auto ms-5"
+                >
+                    @{display_name}
+                </h1>
+                <p class="text-center">
+                    {name}
+                </p>
+            </div>
         </div>
         <br />
         <div>
-            <p class="mt-5">{data.userInformation.bio}</p>
+            <p class="mt-5">{data.userInformation?.bio}</p>
         </div>
     </div>
 </div>

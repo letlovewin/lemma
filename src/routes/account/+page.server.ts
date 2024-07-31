@@ -8,15 +8,8 @@ export const actions: Actions = {
     save: async ({ request, locals: { supabase } }) => {
         const formData = await request.formData()
 
-        const bio = formData.get('bio');
-
-        if (String(bio).length <= 2 || String(bio).length >= 300) {
-            return fail(400, {
-                error: "You're being rate limited.",
-                invalid: true,
-                message: "Bio must be greater than 2 characters and at most 300 characters"
-            });
-        }
+        let bio = formData.get('bio');
+        let name = formData.get('name');
 
         let supabaseAdmin = createClient(VITE_SUPABASE_URL, SERVICE_ROLE_KEY);
 
@@ -25,6 +18,19 @@ export const actions: Actions = {
         let uid = user.data.user.id;
         let user_metadata = user.data.user.user_metadata;
 
+        if(String(bio).length >= 300) {
+            return fail(400, {
+                error: "You're being rate limited.",
+                invalid: true,
+                message: "Bio must be greater than 2 characters and at most 300 characters"
+            });
+        }
+        if ((String(bio).length == 0)) {
+            bio = user_metadata.bio;
+        }
+        if (String(name).length == 0) {
+            name = user_metadata.name;
+        }
         const { data: databaseData, error: databaseError } = await supabaseAdmin
             .from('profiles')
             .update({ bio: bio })
@@ -35,6 +41,7 @@ export const actions: Actions = {
                 display_name: user_metadata.display_name,
                 email: user.data.user.email,
                 profile_photo_url: user_metadata.profile_photo_url,
+                name: name
             }
         })
 

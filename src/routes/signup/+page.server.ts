@@ -13,7 +13,7 @@ export const actions: Actions = {
 
     const usernameRegex = /^[a-zA-Z0-9]+$/
 
-    if (username.length > 20 || username.length <= 1 ) {
+    if (username.length > 20 || username.length <= 1) {
       return fail(400, {
         email: email,
         invalid: true,
@@ -21,7 +21,7 @@ export const actions: Actions = {
       });
     }
 
-    if(!username.match(usernameRegex)) {
+    if (!username.match(usernameRegex)) {
       return fail(400, {
         email: email,
         invalid: true,
@@ -57,7 +57,7 @@ export const actions: Actions = {
     const { error } = await supabase.auth.signUp({
       email, password, options: {
         data: {
-          display_name: username, bio: "New user...", profile_photo_url: "", actorPublicKey: publicKey.export({
+          display_name: username, bio: "New user...", profile_photo_url: "", name: "", actorPublicKey: publicKey.export({
             type: "pkcs1",
             format: "pem",
           }), actorPrivateKey: privateKey.export({

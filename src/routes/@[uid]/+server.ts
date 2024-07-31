@@ -44,6 +44,7 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
 
     const { data: usernameKeyData, error: usernameKeyError } = await supabaseAdmin.auth.admin.getUserById(usernameData.id)
 
+
     return new Response(
         JSON.stringify({
             "@context": ["https://www.w3.org/ns/activitystreams", {
@@ -66,7 +67,9 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
             "following": `https://${url.hostname}/@${uid}/following`,
             "followers": `https://${url.hostname}/@${uid}/followers`,
             "inbox": `https://${url.hostname}/@${uid}/inbox`,
+            "url": `https://${url.hostname}/@${uid}`,
             "preferredUsername": `${uid}`,
+            "name": `${usernameKeyData.user?.user_metadata.name}`,
             "summary": `${usernameData.bio}`,
             "icon": [
                 //tbd add this later
