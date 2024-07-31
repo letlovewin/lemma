@@ -29,7 +29,6 @@ export const actions: Actions = {
             .from('profiles')
             .update({ bio: bio })
             .eq('id', uid)
-
         const { data: userData, error: userError } = await supabase.auth.updateUser({
             data: {
                 bio: bio,
@@ -45,6 +44,6 @@ export const actions: Actions = {
             });
         }
 
-        
+
     },
 }

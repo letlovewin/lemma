@@ -11,11 +11,21 @@ export const actions: Actions = {
     const password = formData.get('password') as string
     const username = formData.get('username') as string
 
-    if (username.length > 20 || username.length <= 1) {
+    const usernameRegex = /^[a-zA-Z0-9]+$/
+
+    if (username.length > 20 || username.length <= 1 ) {
       return fail(400, {
         email: email,
         invalid: true,
         message: "Username must be less than 20 characters and more than 1 character long"
+      });
+    }
+
+    if(!username.match(usernameRegex)) {
+      return fail(400, {
+        email: email,
+        invalid: true,
+        message: "Username can't have any spaces and must be alphanumeric"
       });
     }
 
