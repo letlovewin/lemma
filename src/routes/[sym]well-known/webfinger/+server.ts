@@ -2,9 +2,6 @@
     This is the implementation of the webfinger protocol.
 */
 
-import { VITE_SUPABASE_KEY } from '$env/static/private';
-import { createClient } from '@supabase/supabase-js';
-import { error } from '@sveltejs/kit';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url, params, request, locals: { supabase } }) => {
@@ -34,8 +31,13 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
                 ],
                 links: [
                     {
-                        rel: "self",
+                        rel: "self", // this should point to the api endpoint for the actor object
                         type: "application/activity+json",
+                        href: `https://${url.hostname}/actor/${uid}`
+                    },
+                    {
+                        rel: "http://webfinger.net/rel/profile-page", // this is what a human should look at if they want more info about the person that's been referenced
+                        type: "text/html",
                         href: `https://${url.hostname}/@${uid}`
                     }
                 ]
