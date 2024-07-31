@@ -3,7 +3,6 @@
     // console.log(data.userInformation);
     let profile_photo_url = data.userInformation?.profile_photo;
     let display_name = data.userInformation?.display_name;
-    let uuid = data.userInformation?.uuid;
     let name = data.userInformation?.name;
 </script>
 
@@ -28,7 +27,7 @@
                 </div>
             {:else}
                 <div class="avatar">
-                    <div class="w-50 rounded-xl">
+                    <div class="w-24 rounded-full">
                         <img
                             src={profile_photo_url}
                             alt="{display_name}'s profile photo"

@@ -71,9 +71,11 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
             "preferredUsername": `${uid}`,
             "name": `${usernameKeyData.user?.user_metadata.name}`,
             "summary": `${usernameData.bio}`,
-            "icon": [
-                //tbd add this later
-            ],
+            "icon": {
+                "type": "Image",
+                "mediaType": "image/*",
+                "url": `${usernameKeyData.user?.user_metadata.profile_photo_url}`
+            },
             "publicKey": {
                 "id": `https://${url.hostname}/@${uid}#main-key`,
                 "owner": `https://${url.hostname}/@${uid}`,

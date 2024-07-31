@@ -3,10 +3,16 @@
     let display_name = data.user?.user_metadata.display_name;
     let bio = data.user?.user_metadata.bio;
     let name = data.user?.user_metadata.name;
+    let photo_url = data.user?.user_metadata.profile_photo_url
 
-    if(name == undefined) {
-        name = 'Name';
+    if (name == undefined) {
+        name = "Name";
     }
+
+    if (photo_url == "") {
+        photo_url = "Profile picture URL"
+    }
+
 </script>
 
 <svelte:head>
@@ -20,21 +26,27 @@
 <div class="container mx-auto p-5">
     <h1 class="text-center text-4xl font-extrabold lg:text-2xl">Account</h1>
 
-    <form method="POST" action="?/save">
+    <form method="POST" action="?/save" enctype=multipart/form-data>
         <div class="grid justify-center mt-2 gap-2">
+            <input
+                type="text"
+                name="photo-url"
+                placeholder={photo_url}
+                class="input input-bordered w-full max-w-xs"
+            />
             <div class="tooltip" data-tip="Display names are immutable">
                 <input
-                type="text"
-                name="displayname"
-                placeholder="@{display_name}"
-                class="input input-bordered w-full max-w-xs"
-                disabled
-            />
+                    type="text"
+                    name="displayname"
+                    placeholder="@{display_name}"
+                    class="input input-bordered w-full max-w-xs"
+                    disabled
+                />
             </div>
             <input
                 type="text"
                 name="name"
-                placeholder="{name}"
+                placeholder={name}
                 class="input input-bordered w-full max-w-xs"
             />
 
@@ -49,7 +61,7 @@
     </form>
     {#key form?.message}
         {#if form?.message != undefined}
-            <p class="text-secondary text-center mt-5 text-wrap">
+            <p class="text-error text-center mt-5 text-wrap">
                 {form?.message}
             </p>
         {/if}

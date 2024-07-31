@@ -73,7 +73,7 @@
     <br />
     {#key form?.message}
       {#if form?.message != undefined}
-        <p class="text-secondary mt-5">{form?.message}</p>
+        <p class="text-error mt-5">{form?.message}</p>
       {/if}
     {/key}
     <a class="mt-5 link-sexy" href="/recover-password">Forgot your password?</a>

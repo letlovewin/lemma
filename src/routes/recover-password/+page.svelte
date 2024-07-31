@@ -55,7 +55,7 @@
             {#if form?.message != undefined && form?.success === true}
                 <p class="text-primary mt-5">{form?.message}</p>
             {:else if form?.message != undefined && form?.success === undefined}
-                <p class="text-secondary mt-5">An unknown error has occured.</p>
+                <p class="text-error mt-5">An unknown error has occured.</p>
             {/if}
         {/key}
     </form>

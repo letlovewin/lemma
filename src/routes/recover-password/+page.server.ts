@@ -6,7 +6,7 @@ export const actions: Actions = {
         const formData = await request.formData()
         const email = formData.get('email') as string
         const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: 'http://localhost:5173/password-reset',
+            redirectTo: 'https://lemma-swart.vercel.app/password-reset',
         })
         if(error) {
             

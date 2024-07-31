@@ -8,8 +8,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
     // console.log("UID: " + uid);
     if (uid.split("@").length > 1) {
         const content = uid.split("@");
-        console.log(content[0])
-        console.log(content[1])
+
         const response = await fetch(`https://${content[1]}/.well-known/webfinger?resource=acct:${content[0]}@${content[1]}`, {
             method: 'GET',
             headers: {
@@ -20,7 +19,6 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
         const webfinger = await response.json();
 
         if(response.status != 200) { redirect(303,'/feed') }
-        console.log(webfinger);
 
         let actorURL = '';
 
@@ -36,12 +34,20 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
         const actorResponse = await fetch(actorURL,{
             method: 'GET',
             headers: {
-                "content-type": `application/activity+json`,
+                "accept": `application/activity+json`,
             }
         })
-        console.log(actorURL)
+        
         const actorContent = await actorResponse.json();
 
+        return {
+            userInformation: {
+                display_name: actorContent.preferredUsername,
+                bio: actorContent.summary,
+                profile_photo: actorContent.icon.url,
+                name: actorContent.name,
+            }
+        }
 
     } else {
         const { data: usernameData, error: usernameError } = await supabase
@@ -70,7 +76,6 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
         return {
             userInformation: {
                 display_name: data.user.user_metadata.display_name,
-                uuid: uid,
                 bio: data.user.user_metadata.bio,
                 profile_photo: data.user.user_metadata.profile_photo_url,
                 name: data.user.user_metadata.name,
