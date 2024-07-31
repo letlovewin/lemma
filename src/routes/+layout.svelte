@@ -9,8 +9,8 @@
     let email = "";
     let redirect_link = "/";
     let home_redirect_link = "/";
-    let photo = data.user.user_metadata.profile_photo_url;
-    let display_name = data.user.user_metadata.display_name;
+    let photo = data.user?.user_metadata.profile_photo_url;
+    let display_name = data.user?.user_metadata.display_name;
 
     if (data.user != null) {
         email = data.user.email![0];
