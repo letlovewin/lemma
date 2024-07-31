@@ -26,9 +26,13 @@
     Actor
 */
 
+import { SERVICE_ROLE_KEY, VITE_SUPABASE_URL } from '$env/static/private';
+import { createClient } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url, params, request, locals: { supabase } }) => {
+
+    const supabaseAdmin = createClient(VITE_SUPABASE_URL,SERVICE_ROLE_KEY);
 
     let uid = params.uid
 
@@ -38,8 +42,8 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
         .eq('display_name', uid)
         .maybeSingle()
 
-    console.log(usernameData)
-
+    const { data: usernameKeyData, error: usernameKeyError } = await supabaseAdmin.auth.admin.getUserById(usernameData.id)
+    
     return new Response(
         JSON.stringify({
             "@context": ["https://www.w3.org/ns/activitystreams", { "@language": "en- US" }],
@@ -54,6 +58,13 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
             "icon": [
                 //tbd add this later
             ],
+            "publicKey": {
+                "@context": "https://w3id.org/security/v1",
+                "@type": "Key",
+                "id": `https://${url.hostname}/@${uid}#main-key`,
+                "owner": `https://${url.hostname}/@${uid}`,
+                "publicKeyPem": `${usernameKeyData.user?.user_metadata.actorPublicKey}`
+            }
         })
         , {
             status: 200, headers: new Headers({

@@ -1,7 +1,8 @@
 import { redirect, fail } from '@sveltejs/kit'
 import { AuthApiError } from "@supabase/supabase-js";
-
 import type { Actions } from './$types'
+
+const crypto = await import('node:crypto');
 
 export const actions: Actions = {
   signup: async ({ request, locals: { supabase } }) => {
@@ -23,8 +24,8 @@ export const actions: Actions = {
       .select()
       .eq('display_name', username)
       .maybeSingle()
-    
-    if(usernameError) {
+
+    if (usernameError) {
       console.log(usernameError)
       return fail(500, {
         email: email,
@@ -33,14 +34,29 @@ export const actions: Actions = {
       });
     }
     console.log(usernameData);
-    if(usernameData != null) {
+    if (usernameData != null) {
       return fail(400, {
         email: email,
         invalid: true,
         message: "Username already exists"
       });
     }
-    const { error } = await supabase.auth.signUp({ email, password, options: { data: { display_name: username, bio: "New user...", profile_photo_url: "" } } })
+
+    const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", { modulusLength: 2048 })
+
+    const { error } = await supabase.auth.signUp({
+      email, password, options: {
+        data: {
+          display_name: username, bio: "New user...", profile_photo_url: "", actorPublicKey: publicKey.export({
+            type: "pkcs1",
+            format: "pem",
+          }), actorPrivateKey: privateKey.export({
+            type: "pkcs1",
+            format: "pem",
+          })
+        }
+      }
+    })
     if (error) {
       // console.error(error.code)
       if (error instanceof AuthApiError) {

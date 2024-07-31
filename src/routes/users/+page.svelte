@@ -17,11 +17,11 @@
     <div class="grid justify-center">
         {#each data.userInformation as user}
             <div>
-                <div class="flex">
+                <div class="flex mt-2">
                     {#if user.profile_photo_url === ""}
                         <button
                             on:click={() => {
-                                goto(`/users/{user.id}`);
+                                goto(`/@${user.display_name}`);
                             }}
                         >
                             <div class="avatar placeholder">
