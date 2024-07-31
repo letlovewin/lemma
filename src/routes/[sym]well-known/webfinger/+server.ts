@@ -30,7 +30,7 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
             JSON.stringify({
                 subject: `acct:${url.hostname}/@${uid}`,
                 aliases: [
-                    "`https://${url.hostname}/@${body.resource}`"
+                    `https://${url.hostname}/@${uid}`
                 ],
                 links: [
                     {
