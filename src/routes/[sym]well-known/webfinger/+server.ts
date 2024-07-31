@@ -25,7 +25,7 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
     if (usernameData != null) {
         return new Response(
             JSON.stringify({
-                subject: `acct:${url.hostname}/@${uid}`,
+                subject: `acct:${url.hostname}/actor/${uid}`,
                 aliases: [
                     `https://${url.hostname}/@${uid}`
                 ],
