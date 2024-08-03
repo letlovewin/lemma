@@ -1,13 +1,5 @@
 <script>
-  import { enhance } from "$app/forms";
-
   export let form;
-  let user_email = '';
-  let user_password = '';
-
-  async function signIn() {
-    
-  }
 </script>
 
 <svelte:head>
@@ -67,7 +59,7 @@
         placeholder="Password"
       />
     </label>
-    <button type="submit" class="btn btn-primary self-center mt-5" on:click={signIn}
+    <button type="submit" class="btn btn-primary self-center mt-5"
       >Sign in</button
     >
     <br />

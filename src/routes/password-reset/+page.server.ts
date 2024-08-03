@@ -14,7 +14,7 @@ export const actions: Actions = {
         if(error) {
             console.log(error)
         } else {
-            redirect(303,'/feed')
+            redirect(303,'/')
         }
 
     },

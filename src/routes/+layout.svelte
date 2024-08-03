@@ -15,7 +15,6 @@
     if (data.user != null) {
         email = data.user.email![0];
         redirect_link = "/@" + data.user.user_metadata.display_name;
-        home_redirect_link = "/feed";
     }
 
     onMount(() => {
@@ -51,9 +50,6 @@
                         href="/signin">Sign in</a
                     >
                 {:else if data.user != undefined}
-                    <ul>
-                        <a href="/post" class="btn btn-ghost text-lg me-2"> post </a>
-                    </ul>
                     <a href={redirect_link} class="me-2">
                         {#if photo === ""}
                         <div class="avatar placeholder">
@@ -94,6 +90,12 @@
                             class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                         >
                             <li>
+                                <a href="/post">Make a post</a>
+                            </li>
+                            <li>
+                                <a href="/users">Search users</a>
+                            </li>
+                            <li>
                                 <a href="/account">Settings</a>
                             </li>
                             <li>
@@ -112,7 +114,7 @@
     <main>
         <slot></slot>
     </main>
-    <footer class="text-center mb-5">
+    <footer class="text-center pb-5">
         <a class="link-sexy" href="https://github.com/letlovewin/lemma"
             >Github</a
         >

@@ -71,8 +71,6 @@ export const actions: Actions = {
       // console.error(error.code)
       if (error instanceof AuthApiError) {
         return fail(400, {
-          error: "You're being rate limited.",
-          email: email,
           invalid: true,
           message: error.message
         });

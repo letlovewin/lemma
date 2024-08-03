@@ -30,7 +30,7 @@ export const actions: Actions = {
         message: 'Server error. Try again later.'
       });
     } else {
-      redirect(303, '/feed')
+      redirect(303, '/')
     }
   },
 }

@@ -42,25 +42,15 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
         .eq('display_name', uid)
         .maybeSingle()
 
+    if (usernameData == null) { return new Response(null, { status: 400 }) };
+
     const { data: usernameKeyData, error: usernameKeyError } = await supabaseAdmin.auth.admin.getUserById(usernameData.id)
 
+    console.log(usernameKeyData.user?.user_metadata.name);
 
     return new Response(
         JSON.stringify({
-            "@context": ["https://www.w3.org/ns/activitystreams", {
-                "toot": "http://joinmastodon.org/ns#",
-                "manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
-                "alsoKnownAs": {
-                    "@id": "as:alsoKnownAs",
-                    "@type": "@id"
-                },
-                "movedTo": {
-                    "@id": "as:movedTo",
-                    "@type": "@id"
-                },
-                "indexable": "toot:indexable",
-                "suspended": "toot:suspended"
-            }, { "@language": "en- US" }],
+            "@context": ["https://www.w3.org/ns/activitystreams", { "@language": "en- US" }],
             "type": "Person",
             "id": `https://${url.hostname}/@${uid}`,
             "outbox": `https://${url.hostname}/@${uid}/outbox`,

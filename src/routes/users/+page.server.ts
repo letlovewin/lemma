@@ -19,6 +19,9 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase } }
         page: Number(page),
         perPage: 10
     })
+    if(users.length == 0) { // meaning the user has gone too far a page
+        redirect(300,"/users?p=1");
+    }
     //console.log({users});
     // we only want id and some stuff from user_metadata
     let userDump = [];
@@ -31,6 +34,7 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase } }
         })
     }
     return {
-        userInformation: userDump
+        userInformation: userDump,
+        pageNumber: page
     }
 }
