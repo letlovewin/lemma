@@ -28,12 +28,17 @@
 
     <form method="POST" action="?/save" enctype=multipart/form-data>
         <div class="grid justify-center mt-2 gap-2">
-            <input
-                type="text"
-                name="photo-url"
-                placeholder={photo_url}
-                class="input input-bordered w-full max-w-xs"
-            />
+            <label class="form-control w-full max-w-xs">
+                <div class="label">
+                    <span class="label-text">Profile photo</span>
+                </div>
+                <input
+                    type="file"
+                    name="photo-upload"
+                    accept="image/jpeg"
+                    class="file-input file-input-bordered w-full max-w-xs"
+                />
+            </label>
             <div class="tooltip" data-tip="Display names are immutable">
                 <input
                     type="text"

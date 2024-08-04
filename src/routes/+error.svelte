@@ -18,14 +18,7 @@
         </h1>
     </div>
     <div class="flex justify-center gap-5 mt-5">
-        <button
-            class="btn btn-primary w-24"
-            on:click={() => {
-                if (browser) {
-                    goto("/");
-                }
-            }}>Home</button
-        >
+        <a role="button" class="btn btn-primary w-24" href="/">Home</a>
     </div>
     <br />
 {/if}

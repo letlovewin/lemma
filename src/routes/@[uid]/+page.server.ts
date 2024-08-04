@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
             },
         });
 
-        if (response.status != 200) { redirect(303, '/') }
+        if (response.status != 200) { return { userInformation: null } }
 
         const webfinger = await response.json();
 
@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
             }
         }
 
-        if (actorURL == '') { redirect(303, '/') } // Something wrong with the webfinger
+        if (actorURL == '') { return { userInformation: null } } // Something wrong with the webfinger
 
         const actorResponse = await fetch(actorURL, {
             method: 'GET',
@@ -48,9 +48,10 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
 
         const outboxResponse = await fetch(actorContent.outbox, { method: 'GET', headers: { accept: `application/activity+json` } })
         let outboxContent = await outboxResponse.json();
-        let posts;
 
-        if (!outboxContent.orderedItems) {
+        if(outboxContent.first) { // meaning the user is from an instance with a paginated outbox..
+            let posts;
+
             const postsResponse = await fetch(outboxContent.first, {
                 method: 'GET',
                 headers: {
@@ -58,10 +59,18 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
                 }
             })
             posts = await postsResponse.json()
+            outboxContent = posts;
         }
-        else { posts = outboxContent.orderedItems }
 
-        return {
+        let profileURL = null;
+        for (let i = 0; i < webfinger.links.length; i++) {
+            if (webfinger.links[i].rel == 'http://webfinger.net/rel/profile-page') {
+                profileURL = webfinger.links[i].href;
+                break;
+            }
+        }
+
+        return { // TODO load posts from other instances on this instance. not right now though
             userInformation: {
                 display_name: sanitizedDisplayName,
                 bio: sanitizedSummary,
@@ -69,7 +78,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
                 name: sanitizedName,
                 instance: content[1],
                 outbox: outboxContent,
-                posts: posts
+                profileURL: profileURL
             }
         }
 
@@ -81,7 +90,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
             .maybeSingle()
 
         if (usernameData == null) {
-            redirect(303, '/');
+            return { userInformation: null }
         }
         const supabaseAdmin = createClient(VITE_SUPABASE_URL, SERVICE_ROLE_KEY, { // TODO: clean this up. i don't think this is the proper way to do this lol!
             auth: {
@@ -110,7 +119,7 @@ export const load: PageServerLoad = async ({ params, locals: { supabase } }) => 
                 profile_photo: data.user.user_metadata.profile_photo_url,
                 name: data.user.user_metadata.name,
                 instance: null,
-                outbox: outboxData.posts
+                outbox: outboxData.posts,
             }
         }
     }

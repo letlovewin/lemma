@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
     import { goto } from "$app/navigation";
 
     export let data;
+    let search_value: string;
 </script>
 
 <svelte:head>
@@ -20,12 +21,12 @@
             >
                 <input
                     type="text"
-                    name="search-name"
+                    bind:value={search_value}
                     class="grow"
                     placeholder="Search"
                 />
             </label>
-            <button class="btn btn-primary join-item" type="submit">
+            <button class="btn btn-primary join-item" on:click={()=>{goto(`/@${search_value}`)}}>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"

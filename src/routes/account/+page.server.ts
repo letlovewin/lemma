@@ -9,7 +9,7 @@ export const actions: Actions = {
 
         let bio = formData.get('bio');
         let name = formData.get('name');
-        let photo = formData.get('photo-url');
+        let photo = formData.get('photo-upload') as File;
         let supabaseAdmin = createClient(VITE_SUPABASE_URL, SERVICE_ROLE_KEY);
 
         let user = await supabase.auth.getUser();
@@ -36,19 +36,57 @@ export const actions: Actions = {
         if (String(name).length == 0) {
             name = user_metadata.name;
         }
-        if(String(photo).length == 0) {
+        let newPhotoURL;
+        if (String(photo).length == 0) {
             photo = user_metadata.profile_photo_url;
+            newPhotoURL = photo;
+        } else {
+            
+            if (user_metadata.profile_photo_url=="") {
+                const { data: fileWriteData, error: fileWriteError } = await supabaseAdmin
+                    .storage
+                    .from('user_profile_pictures')
+                    .upload(`${user_metadata.display_name}/avatar.jpeg`, photo, {
+                        cacheControl: '3600',
+                        upsert: false
+                    })
+    
+                if (fileWriteError) {
+                    return fail(500, {
+                        message: 'Profile image too large. Must be lesser than 8 MB.'
+                    });
+                }
+                newPhotoURL = await supabaseAdmin.storage.from('user_profile_pictures').getPublicUrl(`${user.data.user.user_metadata.display_name}/avatar.jpeg`).data.publicUrl;
+            } else {
+                const { data: fileWriteData, error: fileWriteError } = await supabaseAdmin
+                    .storage
+                    .from('user_profile_pictures')
+                    .update(`${user_metadata.display_name}/avatar.jpeg`, photo, {
+                        cacheControl: '3600',
+                        upsert: false
+                    })
+    
+                if (fileWriteError) {
+                    console.log(fileWriteError)
+                    return fail(500, {
+                        message: 'Profile image too large. Must be lesser than 8 MB.'
+                    });
+                }
+                newPhotoURL = await supabaseAdmin.storage.from('user_profile_pictures').getPublicUrl(`${user.data.user.user_metadata.display_name}/avatar.jpeg`).data.publicUrl;
+            }
         }
+    
         const { data: databaseData, error: databaseError } = await supabaseAdmin
             .from('profiles')
             .update({ bio: bio })
             .eq('id', uid)
+
         const { data: userData, error: userError } = await supabase.auth.updateUser({
             data: {
                 bio: bio,
                 display_name: user_metadata.display_name,
                 email: user.data.user.email,
-                profile_photo_url: photo,
+                profile_photo_url: newPhotoURL,
                 name: name
             }
         })

@@ -20,30 +20,26 @@
             
             <label class="form-control w-full max-w-xs">
                 <div class="label">
-                    <span class="label-text">Upload image(s)</span>
+                    <span class="label-text">Upload image</span>
                 </div>
                 <input
                     type="file"
                     name="photo-upload"
+                    accept="image/jpeg"
                     class="file-input file-input-bordered w-full max-w-xs"
                 />
             </label>
             <label class="input input-bordered flex items-center gap-2">
-                <input name="name" type="text" class="grow" placeholder="Item name" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2">
                 <input name="price" type="number" class="grow" placeholder="Price" />
             </label>
-
+            <label class="input input-bordered flex items-center gap-2">
+                <input name="alt" type="text" class="grow" placeholder="Alt text" />
+            </label>
             <textarea
                 class="textarea textarea-bordered"
                 name="bio"
-                placeholder="Additional information"
+                placeholder="Item information (Include your contact information)"
             ></textarea>
-
-            <label class="input input-bordered flex items-center gap-2">
-                <input name="contact-info" type="text" class="grow" placeholder="Contact information" />
-            </label>
 
             <button class="btn btn-primary" type="submit">Post</button>
         </div>

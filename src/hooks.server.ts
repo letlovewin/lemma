@@ -77,7 +77,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
   }
 
   if (event.locals.session && (event.url.pathname.startsWith('/signin') || event.url.pathname.startsWith('/signup'))) {
-    redirect(303, '/feed')
+    redirect(303, '/')
   }
 
 

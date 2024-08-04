@@ -5,6 +5,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,svelte}"],
   theme: {
     extend: {},
+    container: {
+      center: true,
+    },
   },
   plugins: [daisyui,],
   daisyui: {
