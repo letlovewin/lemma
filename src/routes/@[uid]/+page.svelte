@@ -64,8 +64,6 @@
                         </p>
                         <div class="columns-3 mt-2">
                             <div><p>{outbox.totalItems} listings</p></div>
-                            <div><p>NaN followers</p></div>
-                            <div><p>NaN following</p></div>
                         </div>
                     </div>
                 </div>
