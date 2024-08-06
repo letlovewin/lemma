@@ -22,6 +22,7 @@
                 <input
                     type="text"
                     bind:value={search_value}
+                    on:keypress={(event)=>{if(event.key == "Enter"){goto(`/@${search_value}`)}}}
                     class="grow"
                     placeholder="Search"
                 />

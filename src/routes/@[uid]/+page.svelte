@@ -6,6 +6,12 @@
     let display_name = data.userInformation?.display_name;
     let name = data.userInformation?.name;
     let outbox = data.userInformation?.outbox;
+    console.log(String(outbox.orderedItems[0].attachment[0].mediaType));
+    console.log(
+        String(outbox.orderedItems[0].attachment[0].mediaType).startsWith(
+            "image",
+        ),
+    );
 </script>
 
 <svelte:head>
@@ -83,42 +89,31 @@
                 {/if}
             </div>
 
-            <!--
-            
-            
-            <div class="grid grid-rows-3">
-                <div class="flex justify-center"></div>
+            <div class="flex flex-wrap place-content-center mt-5">
                 {#if data.userInformation.instance == null}
                     <div>
                         {#each outbox.orderedItems as post}
-                            {#if post.object.attachment != []}
-                                {#if post.object.attachment.mediaType.startsWith("image/")}
-                                    <div
-                                        class="card lg:card-side bg-base-100 shadow-xl"
-                                    >
-                                        <figure>
+                            {#if String(post.attachment[0].mediaType).startsWith("image/", 0)}
+                                <div class="card bg-base-100 w-96 shadow-xl">
+                                    <figure>
+                                        <a href={post.url}>
                                             <img
-                                                src={post.url}
-                                                alt={post.name}
+                                                src={post.attachment[0].url}
+                                                alt="Post"
                                             />
-                                        </figure>
-                                        <div class="card-body">
-                                            <h2 class="card-title">
-                                                New album is released!
-                                            </h2>
-                                            <p>{@html post.object.content}</p>
-                                            {#if post.price}
-                                                <p>{post.price}</p>
-                                            {/if}
-                                        </div>
+                                        </a>
+                                    </figure>
+                                    <div class="card-body">
+                                        <p>
+                                            {post.content}
+                                        </p>
                                     </div>
-                                {/if}
+                                </div>
                             {/if}
                         {/each}
                     </div>
                 {/if}
             </div>
-            -->
         {:else}
             <h1 class="text-center text-4xl font-extrabold lg:text-2xl">
                 This user doesn't exist.

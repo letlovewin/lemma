@@ -12,6 +12,8 @@
     let photo = data.user?.user_metadata.profile_photo_url;
     let display_name = data.user?.user_metadata.display_name;
 
+    let instance_name = "";
+
     if (data.user != null) {
         email = data.user.email![0];
         redirect_link = "/@" + data.user.user_metadata.display_name;
@@ -22,6 +24,8 @@
             if (newSession?.expires_at !== session?.expires_at) {
                 invalidate("supabase:auth");
             }
+
+            instance_name = window.location.host;
         });
 
         return () => data.subscription.unsubscribe();
@@ -38,7 +42,7 @@
         <div class="navbar bg-base-100">
             <div class="flex-1">
                 <a href={home_redirect_link} class="btn btn-ghost text-xl">
-                    lemma
+                    {instance_name}
                 </a>
             </div>
 

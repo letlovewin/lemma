@@ -23,7 +23,8 @@
         <br />
         <h5 class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center">Start your own instance</h5>
         <br />
-        <p>See the README on the <a class="link" href="https://github.com/letlovewin/lemma">Github Repo</a>.</p>
+        <p>See the README on the <a class="link link-primary link-hover" href="https://github.com/letlovewin/lemma">Github Repo</a>. Once I have a minimum viable product, I'll try to make starting an instance as easy as possible. Right now it has a ton of steps, sorry! :P</p>
+        <p>In this case, there is supposed to be one instance for one area— so one instance for the Inland Empire, another instance for San Francisco, etc.</p>
     </div>
     
 </div>
