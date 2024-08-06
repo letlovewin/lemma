@@ -19,64 +19,76 @@
 {#key data.userInformation}
     <div class="container mx-auto p-5">
         {#if data.userInformation}
-            <div class="grid justify-center">
-                <div class="flex">
-                    {#if profile_photo_url === ""}
-                        <div class="avatar placeholder">
-                            <div
-                                class="bg-neutral text-neutral-content w-24 rounded-full"
-                            >
-                                <span class="text-3xl">{display_name[0]}</span>
-                            </div>
-                        </div>
-                    {:else}
-                        <div class="avatar">
-                            <div class="w-24 rounded-full">
-                                <img
-                                    src={profile_photo_url}
-                                    alt="{display_name}'s profile photo"
-                                />
-                            </div>
-                        </div>
-                    {/if}
-                    <div class="grid content-center ms-5">
-                        {#if data.userInformation.instance}
-                            <h1
-                                class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center my-auto ms-5"
-                            >
-                                <a
-                                    href={data.userInformation.profileURL}
-                                    class="link-sexy"
+            <div class="grid rows-3">
+                <div class="flex justify-center">
+                    <div class="me-2">
+                        {#if profile_photo_url === ""}
+                            <div class="avatar placeholder">
+                                <div
+                                    class="bg-neutral text-neutral-content w-36 rounded-full"
                                 >
-                                    @{display_name}@{data.userInformation
-                                        .instance}
-                                </a>
-                            </h1>
+                                    <span class="text-3xl"
+                                        >{display_name[0]}</span
+                                    >
+                                </div>
+                            </div>
                         {:else}
-                            <h1
-                                class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center my-auto ms-5"
-                            >
-                                @{display_name}
-                            </h1>
+                            <div class="avatar">
+                                <div class="w-36 rounded-full">
+                                    <img
+                                        src={profile_photo_url}
+                                        alt="{display_name}'s profile photo"
+                                    />
+                                </div>
+                            </div>
                         {/if}
-                        <p class="text-center">
-                            {name}
-                        </p>
-                        <div class="columns-3 mt-2">
-                            <div><p>{outbox.totalItems} listings</p></div>
-                        </div>
                     </div>
                 </div>
-                <div class="divider"></div>
+            </div>
+            <div class="grid grid-rows-2">
+                <div>
+                    {#if data.userInformation.instance}
+                        <h1
+                            class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center my-auto ms-5"
+                        >
+                            <a
+                                href={data.userInformation.profileURL}
+                                class="link-sexy"
+                            >
+                                @{display_name}@{data.userInformation.instance}
+                            </a>
+                        </h1>
+                    {:else}
+                        <h1
+                            class="scroll-m-20 text-xl font-extrabold lg:text-3xl text-center my-auto ms-5"
+                        >
+                            @{display_name}
+                        </h1>
+                    {/if}
+                </div>
+                <div>
+                    <p class="text-center">
+                        {name}
+                    </p>
+                    <p class="text-center">
+                        {outbox.totalItems} listings
+                    </p>
+                </div>
                 {#if data.userInformation?.bio}
                     <div>
-                        <p>{@html data.userInformation?.bio}</p>
+                        <p class="text-center mt-2">
+                            {@html data.userInformation?.bio}
+                        </p>
                     </div>
                 {/if}
-                <div class="grid column-2 content-center mt-2">
-                    <button class="btn btn-primary">Follow</button>
-                </div>
-                {#if !data.userInformation.instance}
+            </div>
+
+            <!--
+            
+            
+            <div class="grid grid-rows-3">
+                <div class="flex justify-center"></div>
+                {#if data.userInformation.instance == null}
                     <div>
                         {#each outbox.orderedItems as post}
                             {#if post.object.attachment != []}
@@ -106,6 +118,7 @@
                     </div>
                 {/if}
             </div>
+            -->
         {:else}
             <h1 class="text-center text-4xl font-extrabold lg:text-2xl">
                 This user doesn't exist.

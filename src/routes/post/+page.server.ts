@@ -78,10 +78,13 @@ export const actions: Actions = {
 
         let outbox = usernameData.posts;
         outbox.orderedItems.push(new_note);
+        outbox.totalItems += 1;
+
+        console.log(outbox)
 
         const { data: databaseData, error: databaseError } = await supabaseAdmin
             .from('profiles')
             .update({ posts: outbox })
-            .eq('id', new_post.display_name)
+            .eq('display_name', new_post.display_name)
     },
 }

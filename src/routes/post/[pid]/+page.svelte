@@ -16,10 +16,11 @@
         <figure>
           <img
             src={data.post_content?.photo_url}
+            class="max-w-96 max-h-96"
             alt="Post" />
         </figure>
         <div class="card-body">
-          <p>{data.post_content?.description}</p>
+          <p><span class="text-sm">${data.post_content?.price.toLocaleString()}</span><br />{data.post_content?.description}</p>
         </div>
       </div>
     {:else}
