@@ -8,6 +8,48 @@
             verification_modal.showModal();
         }
     });
+
+    async function markSold(postID: Number) {
+        const { data: postData, error: postError } = await data.supabase
+            .from("posts")
+            .update({ sold: true })
+            .eq("id", postID);
+    }
+
+    async function deletePost(postID: Number) {
+
+        const { data: postData, error: postError } = await data.supabase
+            .from("posts")
+            .select()
+            .eq("id", postID)
+            .maybeSingle();
+
+        const date = postData.created_at;
+
+        const { data: userData, error: userError } = await data.supabase
+            .from("profiles")
+            .select()
+            .eq("display_name", data.user?.user_metadata.display_name)
+            .maybeSingle();
+
+        let posts = userData.posts;
+        posts.totalItems -= 1;
+
+        for (let i = 0; i < posts.orderedItems.length; i++) {
+            if (posts.orderedItems[i].published == date) {
+                posts.orderedItems.splice(i, 1);
+                break;
+            }
+        }
+
+        const { data: updatePostData, error: updatePostError } =
+            await data.supabase
+                .from("profiles")
+                .update({ posts: posts })
+                .eq("display_name", data.user?.user_metadata.display_name);
+
+        const response = await data.supabase.from("posts").delete().eq("id", postID);
+    }
 </script>
 
 <svelte:head>
@@ -113,24 +155,32 @@
                                     <ul
                                         class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
                                     >
-                                        <li class="text-primary">
-                                            <button
-                                                ><svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="16"
-                                                    height="16"
-                                                    fill="currentColor"
-                                                    class="bi bi-check"
-                                                    viewBox="0 0 16 16"
+                                        {#if !post.sold}
+                                            <li class="text-primary">
+                                                <button
+                                                    on:click={() => {
+                                                        markSold(post.id);
+                                                    }}
+                                                    ><svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        width="16"
+                                                        height="16"
+                                                        fill="currentColor"
+                                                        class="bi bi-check"
+                                                        viewBox="0 0 16 16"
+                                                    >
+                                                        <path
+                                                            d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"
+                                                        />
+                                                    </svg> Mark as sold</button
                                                 >
-                                                    <path
-                                                        d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z"
-                                                    />
-                                                </svg> Mark as sold</button
-                                            >
-                                        </li>
+                                            </li>
+                                        {/if}
                                         <li class="text-error">
                                             <button
+                                                on:click={() => {
+                                                    deletePost(post.id);
+                                                }}
                                                 ><svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="16"

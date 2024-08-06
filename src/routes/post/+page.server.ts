@@ -80,11 +80,11 @@ export const actions: Actions = {
         outbox.orderedItems.push(new_note);
         outbox.totalItems += 1;
 
-        console.log(outbox)
-
         const { data: databaseData, error: databaseError } = await supabaseAdmin
             .from('profiles')
             .update({ posts: outbox })
             .eq('display_name', new_post.display_name)
+
+        redirect(303,`/post/${writeData[0].id}`)
     },
 }

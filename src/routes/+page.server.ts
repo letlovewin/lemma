@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types'
+import type { PageServerLoad, Actions } from './$types'
 import { createClient } from '@supabase/supabase-js';
 
 export const load: PageServerLoad = async ({ params, url, locals: { supabase } }) => {
@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase } }
         .select()
         .limit(20)
 
-    if (data!.length==0) {
+    if (data!.length == 0) {
         return {
             status: false,
             content: null
@@ -39,3 +39,11 @@ export const load: PageServerLoad = async ({ params, url, locals: { supabase } }
         content: data
     }
 }
+
+/*
+export const actions: Actions = {
+    marksold: async ({ url, request, locals: { supabase } }) => {
+        
+    }
+}
+    */
