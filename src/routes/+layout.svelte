@@ -54,14 +54,14 @@
                         {#if photo === ""}
                         <div class="avatar placeholder">
                             <div
-                                class="bg-neutral text-neutral-content w-12 rounded-full"
+                                class="bg-neutral text-neutral-content w-12 rounded-xl"
                             >
                                 <span>{email}</span>
                             </div>
                         </div>
                         {:else}
                         <div class="avatar">
-                            <div class="w-12 rounded-full">
+                            <div class="w-12 rounded-xl">
                                 <img
                                     src={photo}
                                     alt="{display_name}'s profile photo"

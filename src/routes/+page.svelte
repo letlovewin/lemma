@@ -33,7 +33,7 @@
             .maybeSingle();
 
         let posts = userData.posts;
-        posts.totalItems -= 1;
+        posts.totalItems = Number(posts.totalItems) - 1;
 
         for (let i = 0; i < posts.orderedItems.length; i++) {
             if (posts.orderedItems[i].published == date) {

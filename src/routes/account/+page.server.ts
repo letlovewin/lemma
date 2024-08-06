@@ -37,7 +37,7 @@ export const actions: Actions = {
             name = user_metadata.name;
         }
         let newPhotoURL;
-        if (String(photo).length == 0) {
+        if (photo.size == 0) {
             photo = user_metadata.profile_photo_url;
             newPhotoURL = photo;
         } else {
@@ -52,6 +52,7 @@ export const actions: Actions = {
                     })
     
                 if (fileWriteError) {
+                    console.log(fileWriteError)
                     return fail(500, {
                         message: 'Profile image too large. Must be lesser than 8 MB.'
                     });

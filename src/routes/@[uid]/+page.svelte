@@ -25,7 +25,7 @@
                         {#if profile_photo_url === ""}
                             <div class="avatar placeholder">
                                 <div
-                                    class="bg-neutral text-neutral-content w-36 rounded-full"
+                                    class="bg-neutral text-neutral-content w-36 rounded-xl"
                                 >
                                     <span class="text-3xl"
                                         >{display_name[0]}</span
@@ -34,7 +34,7 @@
                             </div>
                         {:else}
                             <div class="avatar">
-                                <div class="w-36 rounded-full">
+                                <div class="w-36 rounded-xl">
                                     <img
                                         src={profile_photo_url}
                                         alt="{display_name}'s profile photo"
