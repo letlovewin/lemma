@@ -6,12 +6,7 @@
     let display_name = data.userInformation?.display_name;
     let name = data.userInformation?.name;
     let outbox = data.userInformation?.outbox;
-    console.log(String(outbox.orderedItems[0].attachment[0].mediaType));
-    console.log(
-        String(outbox.orderedItems[0].attachment[0].mediaType).startsWith(
-            "image",
-        ),
-    );
+
 </script>
 
 <svelte:head>
@@ -97,13 +92,35 @@
                                 <div class="card bg-base-100 w-96 shadow-xl">
                                     <figure>
                                         <a href={post.url}>
-                                            <img
-                                                src={post.attachment[0].url}
-                                                alt="Post"
-                                            />
+                                            {#if post.sold}
+                                                <div class="image-container">
+                                                    <img
+                                                        src={post.attachment[0].url}
+                                                        alt="Post"
+                                                        class="blur-sm"
+                                                    />
+                                                    <div class="centered">
+                                                        <p
+                                                            class="scroll-m-20 text-4xl font-extrabold lg:text-5xl text-center"
+                                                        >
+                                                            Sold
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            {:else}
+                                                <img
+                                                    src={post.attachment[0].url}
+                                                    alt="Post"
+                                                />
+                                            {/if}
                                         </a>
                                     </figure>
                                     <div class="card-body">
+                                        <p class="text-sm">
+                                            ${Number(
+                                                post.price,
+                                            ).toLocaleString()}
+                                        </p>
                                         <p>
                                             {post.content}
                                         </p>

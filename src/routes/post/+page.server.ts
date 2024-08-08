@@ -50,6 +50,8 @@ export const actions: Actions = {
             "@context": "https://www.w3.org/ns/activitystreams",
             "id": `https://${url.hostname}/post/${writeData[0].id}`,
             "type": "Note",
+            "price": new_post.price,
+            "sold": new_post.sold,
             "content": `${new_post.description}`,
             "url": `https://${url.hostname}/post/${writeData[0].id}`,
             "attributedTo": `https://${url.hostname}/@${new_post.display_name}`,

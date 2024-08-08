@@ -1,6 +1,7 @@
 import { SERVICE_ROLE_KEY, VITE_SUPABASE_URL } from '$env/static/private';
 import { createClient } from '@supabase/supabase-js';
 import type { RequestHandler } from '@sveltejs/kit';
+import { compact } from 'jsonld';
 
 export const GET: RequestHandler = async ({ url, params, request, locals: { supabase } }) => {
     let uid = params.uid;
@@ -15,7 +16,8 @@ export const GET: RequestHandler = async ({ url, params, request, locals: { supa
 
     // generate the outbox ad hoc if it doesn't already exist.
     if (usernameData.posts == null) {
-        const supabaseAdmin = createClient(VITE_SUPABASE_URL,SERVICE_ROLE_KEY);
+        const supabaseAdmin = createClient(VITE_SUPABASE_URL, SERVICE_ROLE_KEY);
+
         let new_outbox = {
             "@context": "https://www.w3.org/ns/activitystreams",
             "id": `https://${url.hostname}/@${uid}/outbox`,
