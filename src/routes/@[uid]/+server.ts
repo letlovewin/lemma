@@ -1,28 +1,4 @@
 /*
-{
-    "@context": ["https://www.w3.org/ns/activitystreams", { "@language": "en- US" }],
-    "type": "Person",
-    "id": `https://${url.hostname}/@${uid}`,
-    "outbox": `https://${url.hostname}/@${uid}/outbox`,
-    "following": `https://${url.hostname}/@${uid}/following`,
-    "followers": `https://${url.hostname}/@${uid}/followers`,
-    "inbox": `https://${url.hostname}/@${uid}/inbox`,
-    "preferredUsername": `${uid}`,
-    "summary": `${usernameData.bio}`,
-    "icon": [
-      //tbd add this later
-    ],
-    "publicKey": {
-      "@context": "https://w3id.org/security/v1",
-      "@type": "Key",
-      "id": "https://paul.kinlan.me/paul#main-key",
-      "owner": "https://paul.kinlan.me/paul",
-      "publicKeyPem": process.env.ACTIVITYPUB_PUBLIC_KEY
-    }
-  }
-*/
-
-/*
     Actor
 */
 
